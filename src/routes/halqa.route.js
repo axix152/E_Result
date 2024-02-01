@@ -10,5 +10,8 @@ router.post('/add-halqa',HalqaController.addHalqa)
 // ******** GET ROUTE
 router.get('/',HalqaController.allHalqa)
 
+// ******* PUT ROUTE (update)
+router.put('/update-details',HalqaController.updateCandidateVote)
+
 
 module.exports = router

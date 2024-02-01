@@ -39,3 +39,28 @@ exports.allHalqa =  async (req,res) => {
         return res.status(500).json({msg:err.message})
     }
 }
+
+// ****** Update candidate votes
+exports.updateCandidateVote =  async (req,res) =>{
+    try{
+        const { halqaId, candidateId, newVote } = req.body;
+
+        const halqa = await Halqa.findById(halqaId)
+        if (!halqa) {
+            return res.status(404).json({ error: 'Halqa not found' });
+        }
+
+        const candidate = halqa.candidates.id(candidateId);
+
+        if (!candidate) {
+            return res.status(404).json({ error: 'Candidate not found in the specified Halqa' });
+        }
+        candidate.vote = newVote;
+        await halqa.save();
+
+       return res.json({ message: 'Candidate votes updated successfully', halqa });
+    }
+    catch(err){
+        return res.status(500).json({msg:err.message})
+    }
+}
